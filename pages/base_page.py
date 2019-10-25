@@ -1,6 +1,8 @@
 from .locators import BasePageLocators
 from selenium import webdriver
 from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import NoAlertPresentException
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
@@ -16,6 +18,13 @@ class BasePage:
     def scroll_to_elem(self, elem):
         self.browser.execute_script("return arguments[0].scrollIntoView(true);", elem)
 
+    def is_element_present(self, how, what):
+        try:
+            self.browser.find_element(how, what)
+        except (NoSuchElementException):
+            return False
+        return True
+
     def open_login_form(self):
         link = self.browser.find_elements(*BasePageLocators.LOGIN_BUTTON)
         link[1].click()
@@ -30,6 +39,13 @@ class BasePage:
 
         button_submit = self.browser.find_element(*BasePageLocators.LOGIN_SUBMIT)
         button_submit.click()
+
+    def go_to_basket_page(self):
+        ref = self.browser.find_element(*BasePageLocators.BASKET_REF)
+        ref.click()
+
+
+
 
 
 
