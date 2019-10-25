@@ -19,5 +19,9 @@ def test_tradesoft_main_page(browser):
     search_engine = SearchEngine(browser)
     search_engine.start_search("8GH007157121")
     search_engine.wait_for_search_results()
+    search_results = search_engine.get_search_results()
+    #print(search_results)
 
-    time.sleep(6000)
+    search_engine.add_to_basket(2)
+    #//tr[contains(@class, "search-code-row")][2]/td[contains(@class, "search-col__action")]/td[contains(@class, "search-col__action")]//a
+    #time.sleep(60000)

@@ -11,3 +11,5 @@ class SearchLocators():
     SEARCH_BUTTON = (By.CSS_SELECTOR, 'button[name="search"]')
     SEARCH_RESULTS = (By.CSS_SELECTOR, 'div.search-data__title')
 
+
+
