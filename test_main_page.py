@@ -1,6 +1,7 @@
 from .pages.main_page import MainPage
 from .pages.basket_page import BasketPage
 from .pages.search_engine import SearchEngine
+from .pages.make_order_page import MakeOrderPage
 
 import time
 
@@ -27,12 +28,16 @@ def test_tradesoft_main_page(browser):
     for i, r in enumerate(search_results, 1):
         search_engine.add_to_basket(i)
 
-    time.sleep(3)
+    #time.sleep(3)
 
     main_page.go_to_basket_page()
 
     basket_page = BasketPage(browser, browser.current_url)
     basket_page.safe_order()
+
+    make_order_page = MakeOrderPage(browser, browser.current_url)
+    make_order_page.fill_order_form()
+    make_order_page.confirm_order()
 
     #time.sleep(3)
     #basket_page.clear_all()
