@@ -1,7 +1,6 @@
 from .base_page import BasePage
-from .locators import MakeOrderPageLocators
-from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
+from .locators import MakeOrderPageLocators
 
 class MakeOrderPage(BasePage):
     def fill_order_form(self):
