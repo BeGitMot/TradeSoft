@@ -4,28 +4,35 @@ from user.search_engine import SearchEngine
 from user.basket_page import BasketPage
 from user.make_order_page import MakeOrderPage
 from user.orders_page import OrdersPage
+from admin.admin_main_page import AdminMainPage
 from selenium import webdriver
 import time
 
 
 ADMIN_MAIN_URL = "http://etspru-test.auto-vision.ru/admin"
-MAIN_URL = "http://etspru-test.auto-vision.ru"
-'''
-def test_tradesoft_admin_pages(browser):
+
+def test_tradesoft_admin_pages():
+    browser = connect_to_browser("chrome")
     #admin_main_page = AdminMainPage(browser, ADMIN_MAIN_URL)
     #admin_main_page.open()
     #time.sleep(60000)
     #time.sleep(30)
     admin_main_page = AdminMainPage(browser, ADMIN_MAIN_URL)  # инициализируем Page Object, передаем в конструктор экземпляр драйвера и url адрес
-    time.sleep(5)
     admin_main_page.open()
+    time.sleep(2)
+    admin_main_page.login("admin", "bulka1983")
+
+
+    #admin_main_page.accept_alert()
+    #admin_main_page.login("admin", "bulka1983")
+
     time.sleep(30)
 
-'''
+
 MAIN_URL = "http://etspru-test.auto-vision.ru"
 
-def test_tradesoft_user_pages():
-    browser = connect_to_browser("chrome")
+def OFF_test_tradesoft_user_pages():
+    browser = connect_to_browser("firefox")
     #browser = webdriver.Chrome()
 
     #открываем страницу
@@ -49,21 +56,17 @@ def test_tradesoft_user_pages():
         search_engine.add_to_basket(i, 3)
 
     #time.sleep(3)
-
     main_page.go_to_basket_page()
-    time.sleep(2)
+    #basket_page = BasketPage(browser, browser.current_url)
+    #basket_page.clear_all()
+    #time.sleep(2)
+    
     basket_page = BasketPage(browser, browser.current_url)
     basket_page.safe_order()
-
+    
     make_order_page = MakeOrderPage(browser, browser.current_url)
     make_order_page.fill_order_form()
     make_order_page.confirm_order()
-
-    #time.sleep(3)
-    #basket_page.clear_all()
-    #time.sleep(5)
-    #basket_page.clear_all()
-    #//tr[contains(@class, "search-code-row")][2]/td[contains(@class, "search-col__action")]/td[contains(@class, "search-col__action")]//a
 
     time.sleep(2)
     main_page.go_to_orders_page()
@@ -77,5 +80,6 @@ def test_tradesoft_user_pages():
 
     #orders_page.mark_position(5)
     orders_page.cancel_marked_positions()
+
 
     time.sleep(60000)
