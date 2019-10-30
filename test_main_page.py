@@ -11,8 +11,8 @@ import time
 
 ADMIN_MAIN_URL = "http://etspru-test.auto-vision.ru/admin"
 
-def test_tradesoft_admin_pages():
-    browser = connect_to_browser("chrome")
+def OFF_test_tradesoft_admin_pages():
+    browser = connect_to_browser("firefox")
     #admin_main_page = AdminMainPage(browser, ADMIN_MAIN_URL)
     #admin_main_page.open()
     #time.sleep(60000)
@@ -20,7 +20,7 @@ def test_tradesoft_admin_pages():
     admin_main_page = AdminMainPage(browser, ADMIN_MAIN_URL)  # инициализируем Page Object, передаем в конструктор экземпляр драйвера и url адрес
     admin_main_page.open()
     time.sleep(2)
-    admin_main_page.login("admin", "bulka1983")
+    #admin_main_page.login("admin", "bulka1983")
 
 
     #admin_main_page.accept_alert()
@@ -31,7 +31,7 @@ def test_tradesoft_admin_pages():
 
 MAIN_URL = "http://etspru-test.auto-vision.ru"
 
-def OFF_test_tradesoft_user_pages():
+def test_tradesoft_user_pages():
     browser = connect_to_browser("firefox")
     #browser = webdriver.Chrome()
 
@@ -81,5 +81,7 @@ def OFF_test_tradesoft_user_pages():
     #orders_page.mark_position(5)
     orders_page.cancel_marked_positions()
 
+    # time.sleep(60000)
 
-    time.sleep(60000)
+    browser.quit()
+

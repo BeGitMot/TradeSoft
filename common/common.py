@@ -5,6 +5,7 @@ from selenium.common.exceptions import NoAlertPresentException
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import Select
+import platform
 
 class CommonPage:
     def __init__(self, browser, url, timeout=0):
@@ -45,7 +46,12 @@ def connect_to_browser(browser_name = "chrome"):
         browser = webdriver.Chrome(options=options)
     elif browser_name == "firefox":
         print("\nstart firefox browser for test..")
-        browser = webdriver.Firefox()
+        print(platform.system())
+        if platform.system() == "Linux":
+            browser = webdriver.Firefox(executable_path=r'/home/begemot/firefoxdriver/geckodriver')
+        else:
+            browser = webdriver.Firefox()
+
     else:
         raise Exception("browser_name should be chrome or firefox")
 
