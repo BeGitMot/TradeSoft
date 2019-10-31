@@ -9,7 +9,7 @@ from selenium import webdriver
 import time
 
 
-ADMIN_MAIN_URL = "http://etspru-test.auto-vision.ru/admin"
+ADMIN_MAIN_URL = "http://admin:bulka1983@etspru-test.auto-vision.ru/admin"
 
 def OFF_test_tradesoft_admin_pages():
     browser = connect_to_browser("firefox")
@@ -19,7 +19,8 @@ def OFF_test_tradesoft_admin_pages():
     #time.sleep(30)
     admin_main_page = AdminMainPage(browser, ADMIN_MAIN_URL)  # инициализируем Page Object, передаем в конструктор экземпляр драйвера и url адрес
     admin_main_page.open()
-    time.sleep(2)
+    time.sleep(3)
+    admin_main_page.accept_alert()
     #admin_main_page.login("admin", "bulka1983")
 
 
@@ -48,25 +49,27 @@ def test_tradesoft_user_pages():
     search_engine = SearchEngine(browser)
     time.sleep(1)
     search_engine.search("8GH007157121")
+    #search_engine.search("8GH0071571")
+
     search_results = search_engine.get_search_results()
     #print(search_results)
+    if len(search_results) > 0:
+        #добавляем все в корзину
+        for i, r in enumerate(search_results, 1):
+            search_engine.add_to_basket(i, 3)
 
-    #добавляем все в корзину
-    for i, r in enumerate(search_results, 1):
-        search_engine.add_to_basket(i, 3)
+        #time.sleep(3)
+        main_page.go_to_basket_page()
+        #basket_page = BasketPage(browser, browser.current_url)
+        #basket_page.clear_all()
+        #time.sleep(2)
 
-    #time.sleep(3)
-    main_page.go_to_basket_page()
-    #basket_page = BasketPage(browser, browser.current_url)
-    #basket_page.clear_all()
-    #time.sleep(2)
-    
-    basket_page = BasketPage(browser, browser.current_url)
-    basket_page.safe_order()
-    
-    make_order_page = MakeOrderPage(browser, browser.current_url)
-    make_order_page.fill_order_form()
-    make_order_page.confirm_order()
+        basket_page = BasketPage(browser, browser.current_url)
+        basket_page.safe_order()
+
+        make_order_page = MakeOrderPage(browser, browser.current_url)
+        make_order_page.fill_order_form()
+        make_order_page.confirm_order()
 
     time.sleep(2)
     main_page.go_to_orders_page()
@@ -74,12 +77,15 @@ def test_tradesoft_user_pages():
     orders_page = OrdersPage(browser, browser.current_url)
     orders_items = orders_page.get_positions()
 
+    cancel_cnt = 0
     for i, item in enumerate(orders_items, 1):
         if item["status"] == "заказ принят":
             orders_page.mark_position(i)
+            cancel_cnt += 1
 
     #orders_page.mark_position(5)
-    orders_page.cancel_marked_positions()
+    if cancel_cnt > 0:
+        orders_page.cancel_marked_positions()
 
     # time.sleep(60000)
 

@@ -10,9 +10,6 @@ class SearchEngine():
     def wait_for_search_results(self, timeout=20):
         WebDriverWait(self.browser, timeout).until(EC.presence_of_element_located(SearchLocators.SEARCH_RESULTS))
 
-    #def wait_for_search_button(self, timeout=5):
-    #    WebDriverWait(self.browser, timeout).until(EC.invisibility_of_element_located(SearchLocators.SEARCH_BUTTON))
-
     def search(self, what):
         time.sleep(1)
         elem = self.browser.find_element(*SearchLocators.SEARCH_INPUT)
@@ -29,9 +26,20 @@ class SearchEngine():
 
         return "add-basket__link--added" in action_classes
 
+    def found_something(self):
+        try:
+            self.browser.find_element(*SearchLocators.NOT_FOUND_WARN)
+            return False
+        except:
+            return True
 
     def get_search_results(self):
         results = list()
+
+        if not self.found_something():
+            print ("Нет результата поиска")
+            return results
+
         row_elements = self.browser.find_elements(*SearchLocators.SEARCH_ROWS)
         search_locators = SearchLocators()
 

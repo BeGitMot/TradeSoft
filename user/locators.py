@@ -13,10 +13,11 @@ class BasePageLocators():
 class SearchLocators():
     SEARCH_INPUT = (By.CSS_SELECTOR, 'input.search-form__input')
     SEARCH_BUTTON = (By.CSS_SELECTOR, 'button[name="search"]')
-    SEARCH_RESULTS = (By.CSS_SELECTOR, 'div.search-data__title')
+    SEARCH_RESULTS = (By.XPATH, '//div[contains(@class, "search-data__empty-warning")] | //div[contains(@class, "search-data__title")]')
     SEARCH_ROWS = (By.XPATH, '//tr[contains(@class, "search-code-row")]')
     BRAND_NAME_ATT = "data-brand-group"
     PRICE_ATT  = "data-price"
+    NOT_FOUND_WARN = (By.CSS_SELECTOR, 'div.search-data__empty-warning')
 
     def get_row_by_num(self, rownum):
         return (SearchLocators.SEARCH_ROWS[0], SearchLocators.SEARCH_ROWS[1] + f"[{rownum}]")

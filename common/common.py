@@ -39,6 +39,7 @@ class CommonPage:
 
 def connect_to_browser(browser_name = "chrome"):
     browser = None
+    print(f"\nPlatform: {platform.system()}")
     if browser_name == "chrome":
         print("\nstart chrome browser for test..")
         options = webdriver.ChromeOptions()
@@ -46,7 +47,6 @@ def connect_to_browser(browser_name = "chrome"):
         browser = webdriver.Chrome(options=options)
     elif browser_name == "firefox":
         print("\nstart firefox browser for test..")
-        print(platform.system())
         if platform.system() == "Linux":
             browser = webdriver.Firefox(executable_path=r'/home/begemot/firefoxdriver/geckodriver')
         else:
